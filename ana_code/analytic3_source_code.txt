@@ -1,0 +1,46 @@
+CREATE TABLE analytic_2009_to_2014 AS
+SELECT *
+FROM joined_table
+WHERE Name IN ('NO2', 'O3', 'SO2')
+  AND Year BETWEEN 2009 AND 2014
+  AND Measure = 'Mean';
+
+CREATE TABLE analytic_clean AS
+SELECT geography, name, year, age_adjusted_rate, number, estimated_annual_rate, AVG(data_value) AS avg_data_value
+FROM analytic_2009_to_2014
+WHERE geography IN (
+  SELECT geography
+  FROM analytic_2009_to_2014
+  WHERE name IN ('NO2', 'O3', 'SO2')
+    AND year BETWEEN 2009 AND 2014
+    AND measure = 'Mean'
+  GROUP BY geography, year
+)
+GROUP BY geography, name, year, age_adjusted_rate, number, estimated_annual_rate;
+
+select * from analytic_clean;
+
+CREATE TABLE analytic_slope AS
+SELECT geography, name, regr_slope(avg_data_value, age_adjusted_rate) AS slope, regr_intercept(avg_data_value, age_adjusted_rate) AS intercept
+FROM analytic_clean
+GROUP BY geography, name;
+
+select * from analytic_slope;
+
+SELECT geography, name, slope 
+FROM analytic_slope
+WHERE name = 'NO2'
+ORDER BY slope DESC 
+LIMIT 3;
+
+SELECT geography, name, slope 
+FROM analytic_slope
+WHERE name = 'SO2'
+ORDER BY slope DESC 
+LIMIT 3;
+
+SELECT geography, name, slope 
+FROM analytic_slope
+WHERE name = 'O3'
+ORDER BY slope DESC 
+LIMIT 3;

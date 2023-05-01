@@ -1,0 +1,21 @@
+CREATE TABLE analytic_1 AS
+SELECT *
+FROM joined_table
+WHERE Name IN ('NO2', 'O3', 'SO2')
+  AND Year = 2014
+  AND Measure = 'Mean';
+
+SELECT name, corr(number, data_value) AS correlation
+FROM analytic_1
+WHERE name IN ('NO2', 'O3', 'SO2')
+GROUP BY name;
+
+SELECT name, corr(estimated_annual_rate, data_value) AS correlation
+FROM analytic_1
+WHERE name IN ('NO2', 'O3', 'SO2')
+GROUP BY name;
+
+SELECT name, corr(age_adjusted_rate, data_value) AS correlation
+FROM analytic_1
+WHERE name IN ('NO2', 'O3', 'SO2')
+GROUP BY name;

@@ -1,0 +1,4 @@
+SELECT name, (corr(age_adjusted_rate, data_value) * corr(age_adjusted_rate, data_value)) AS percent_var_explained
+FROM analytic_1
+WHERE name IN ('NO2', 'O3', 'SO2')
+GROUP BY name;
