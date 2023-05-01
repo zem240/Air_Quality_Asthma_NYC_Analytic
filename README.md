@@ -1,5 +1,5 @@
 # Air_Quality_Asthma_NYC_Analytic
-Data analytic comparing a dataset about air quality in New York City to Asthma emergency visits in New York City. My name is Zachary Mokhtarzadeh, and I worked with Sabina Prochoski to acomplish this analytic.
+Data analytic comparing a dataset about air quality in New York City to Asthma emergency visits in New York City. My name is Zachary Mokhtarzadeh, and I worked with Sabina Prochoski to accomplish this analytic.
 
 To run our code, first we will explain how to run each of our data cleans. In /etl_code you will find our subdirectories. /etl_code/zack handles the air quality dataset. /etl_code/sabina handles the asthma emergency department visit rates dataset.
 
