@@ -1,0 +1,4 @@
+SELECT DISTINCT name FROM zack_working_dataset;
+SELECT DISTINCT new_geoid FROM zack_working_dataset;
+SELECT DISTINCT year FROM zack_working_dataset;
+SELECT DISTINCT measure FROM zack_working_dataset;

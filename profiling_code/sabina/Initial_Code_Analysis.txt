@@ -1,0 +1,29 @@
+CREATE EXTERNAL TABLE first_code_drop (
+  `Time` INT,
+  GeoType STRING,
+  GeoID INT,
+  Geography STRING,
+  `Age adjusted rate` FLOAT,
+  `Estimated annual rate` FLOAT,
+  `Number` DOUBLE
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+LOCATION 'hdfs://nyu-dataproc-m/user/sp5642/HW7/cleaned_data/'
+TBLPROPERTIES ("skip.header.line.count"="1");
+
+select * from first code drop limit 3;
+
+SELECT DISTINCT `Time` from first_code_drop;
+SELECT DISTINCT GeoID from first_code_drop;
+SELECT DISTINCT Geography from first_code_drop;
+SELECT DISTINCT GeoID, Geography from first_code_drop;
+
+SELECT 
+   AVG(Number) AS Mean_Number,
+   percentile_approx(Number, 0.5) AS Median_Number,
+   AVG(age_adjusted_rate) AS Mean_Adjusted_Rate,
+   percentile_approx(age_adjusted_rate, 0.5) AS Median_Adjusted_Rate,
+   AVG(estimated_annual_rate) AS Mean_Annual_Rate,
+   percentile_approx(estimated_annual_rate, 0.5) AS Median_Annual_Rate
+FROM first_code_drop;

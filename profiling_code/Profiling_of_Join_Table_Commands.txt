@@ -1,0 +1,15 @@
+SELECT COUNT(*) as num_rows
+FROM joined_table;
+
+SELECT DISTINCT geoid, new_geoid FROM joined_table;
+
+DESCRIBE joined_table;
+
+SELECT DISTINCT name, measure, measure_info FROM joined_table;
+
+SELECT year, 
+       SUM(CASE WHEN Name LIKE '%NO2%' THEN 1 ELSE 0 END) AS NO2_count, 
+       SUM(CASE WHEN Name LIKE '%O3%' THEN 1 ELSE 0 END) AS O3_count,
+       SUM(CASE WHEN Name LIKE '%SO2%' THEN 1 ELSE 0 END) AS SO2_count
+FROM joined_table
+GROUP BY year;

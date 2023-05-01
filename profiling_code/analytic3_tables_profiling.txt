@@ -1,0 +1,22 @@
+select count(*) from analytic_2009_to_2014;
+
+SELECT year, 
+       SUM(CASE WHEN Name LIKE '%NO2%' THEN 1 ELSE 0 END) AS NO2_count, 
+       SUM(CASE WHEN Name LIKE '%O3%' THEN 1 ELSE 0 END) AS O3_count,
+       SUM(CASE WHEN Name LIKE '%SO2%' THEN 1 ELSE 0 END) AS SO2_count
+FROM analytic_2009_to_2014
+GROUP BY year;
+
+select count(*) from analytic_clean;
+
+SELECT year, 
+       SUM(CASE WHEN Name LIKE '%NO2%' THEN 1 ELSE 0 END) AS NO2_count, 
+       SUM(CASE WHEN Name LIKE '%O3%' THEN 1 ELSE 0 END) AS O3_count,
+       SUM(CASE WHEN Name LIKE '%SO2%' THEN 1 ELSE 0 END) AS SO2_count
+FROM analytic_clean
+GROUP BY year;
+
+SELECT year, avg_data_value
+FROM analytic_clean
+WHERE geography = 'Willowbrook' AND name = 'SO2'
+GROUP BY year, avg_data_value;

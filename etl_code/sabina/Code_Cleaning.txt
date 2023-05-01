@@ -1,0 +1,14 @@
+CREATE TABLE code_cleaning AS
+SELECT
+  CASE WHEN `geoID` = 1 AND `geography` = 'New York City' THEN 0 ELSE `geoID` END AS `geoID`,
+  `time`,
+  `geotype`,
+  `geography`,
+  `age_adjusted_rate`,
+  `estimated_annual_rate`,
+  `number`,
+  CASE WHEN `age_adjusted_rate` > 107.652 THEN 1 ELSE 0 END AS `high_adjusted_rate`
+FROM first_code_drop;
+
+select * from code_cleaning LIMIT 6;
+SELECT * FROM code_cleaning WHERE geoid = 0;

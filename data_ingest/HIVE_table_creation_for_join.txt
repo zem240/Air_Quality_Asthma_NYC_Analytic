@@ -1,0 +1,48 @@
+CREATE EXTERNAL TABLE first_code_drop (
+  `Time` INT,
+  GeoType STRING,
+  GeoID INT,
+  Geography STRING,
+  `Age adjusted rate` FLOAT,
+  `Estimated annual rate` FLOAT,
+  `Number` DOUBLE
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+LOCATION 'hdfs://nyu-dataproc-m/user/sp5642/HW7/cleaned_data/'
+TBLPROPERTIES ("skip.header.line.count"="1");
+
+CREATE TABLE code_cleaning AS
+SELECT
+  CASE WHEN `geoID` = 1 AND `geography` = 'New York City' THEN 0 ELSE `geoID` END AS `geoID`,
+  `time`,
+  `geotype`,
+  `geography`,
+  `age_adjusted_rate`,
+  `estimated_annual_rate`,
+  `number`,
+  CASE WHEN `age_adjusted_rate` > 107.652 THEN 1 ELSE 0 END AS `high_adjusted_rate`
+FROM first_code_drop;
+
+CREATE EXTERNAL TABLE zack_working_dataset (
+  `uID` STRING,
+  IndicatorID INT,
+  Name STRING,
+  Measure STRING,
+  Measure_Info STRING,
+  Geo_Type_Name STRING,
+  new_geoID INT,
+  geo_location STRING,
+  Year INT,
+  Data_Value DOUBLE
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+LOCATION 'hdfs://nyu-dataproc-m/user/zem240_nyu_edu/zack_cleaned_dataset2';
+
+CREATE TABLE joined_table
+AS
+SELECT *
+FROM code_cleaning
+JOIN zack_working_dataset ON code_cleaning.geoid = zack_working_dataset.new_geoID
+                            AND code_cleaning.`time` = zack_working_dataset.year;

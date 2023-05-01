@@ -1,0 +1,15 @@
+SELECT name, geography, SUM(data_value*age_adjusted_rate)/SUM(age_adjusted_rate) AS weighted_average
+FROM analytic_1
+GROUP BY name, geography;
+
+SELECT geography, name, year, regr_slope(age_adjusted_rate, avg_data_value) AS slope, regr_intercept(age_adjusted_rate, avg_data_value) AS intercept
+FROM analytic_clean
+GROUP BY geography, name, year;
+
+SELECT DISTINCT geography
+FROM joined_table
+WHERE Name IN ('NO2', 'O3', 'SO2')
+AND Year BETWEEN 2009 AND 2014
+AND Measure = 'Mean'
+GROUP BY geography
+HAVING COUNT(DISTINCT Year) = 6
